@@ -12,16 +12,20 @@ type HTTPServer struct {
 	Addr string `yaml:"address" env-required:"true"`
 }
 
-type Config struct {
-	Env string `yaml:"env" env:"ENV" env-required:"true"`
-	HTTPServer `yaml:"http_server"`
+type Postgres struct {
+	DBUrl string `yaml:"database_url" env-required:"true"`
 }
 
+type Config struct {
+	Env        string `yaml:"env" env:"ENV" env-required:"true"`
+	Postgres   `yaml:"postgres"`
+	HTTPServer `yaml:"http_server"`
+}
 
 func MustLoad() *Config {
 	configPath := os.Getenv("CONFIG_PATH")
 	if configPath == "" {
-		flags := flag.String("config", "", "path to the cofiguration file");
+		flags := flag.String("config", "", "path to the cofiguration file")
 		flag.Parse()
 		configPath = *flags
 		if configPath == "" {
