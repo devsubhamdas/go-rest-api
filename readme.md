@@ -46,20 +46,30 @@ go mod tidy
 
 ## Database migration for first time (Important)
 
-un-comment this section in main.go file.
+Uncomment this section from the `cmd/rest-api/main.go` file.
 
 ```go
+// other code
 import (
   // other modules
   "github.com/Subham-Das-98/go-rest-api/internal/models"
 )
-err = db.AutoMigrate(&models.User{})
-if err != nil {
-	slog.Error("database migration failed",
-	  slog.String("error", err.Error()),
-	)
-	os.Exit(1)
+
+func main() {
+  // other code
+
+  // migration
+  err = db.AutoMigrate(&models.User{})
+  if err != nil {
+    slog.Error("database migration failed",
+      slog.String("error", err.Error()),
+    )
+    os.Exit(1)
+  }
+
+  // other code
 }
+
 ```
 
 ## Run the Server
