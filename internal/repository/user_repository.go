@@ -2,9 +2,11 @@ package repository
 
 import (
 	"context"
+	"errors"
 
 	"github.com/Subham-Das-98/go-rest-api/internal/models"
 	"github.com/google/uuid"
+	"github.com/jackc/pgx/v5/pgconn"
 	"gorm.io/gorm"
 )
 
@@ -17,7 +19,20 @@ func NewUserRepository(db *gorm.DB) *UserRepository {
 }
 
 func (r *UserRepository) Create(ctx context.Context, user *models.User) error {
-	return r.db.WithContext(ctx).Create(user).Error
+	err := r.db.WithContext(ctx).Create(user).Error
+	if err == nil {
+		return nil
+	}
+
+	var pgErr *pgconn.PgError
+
+	if errors.As(err, &pgErr) {
+		if pgErr.Code == "23505" && pgErr.ConstraintName == "idx_users_email" {
+			return errors.New("email already exists")
+		}
+	}
+
+	return err
 }
 
 func (r *UserRepository) Update(ctx context.Context, user *models.User) error {
@@ -25,7 +40,17 @@ func (r *UserRepository) Update(ctx context.Context, user *models.User) error {
 }
 
 func (r *UserRepository) Delete(ctx context.Context, id uuid.UUID) error {
-	return r.db.WithContext(ctx).Delete(&models.User{}, id).Error
+	result := r.db.WithContext(ctx).Delete(&models.User{}, id)
+
+	if result.Error != nil {
+		return result.Error
+	}
+
+	if result.RowsAffected == 0 {
+		return gorm.ErrRecordNotFound
+	}
+
+	return nil
 }
 
 func (r *UserRepository) GetByID(ctx context.Context, id uuid.UUID) (*models.User, error) {

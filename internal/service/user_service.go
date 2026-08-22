@@ -8,7 +8,7 @@ import (
 	"github.com/Subham-Das-98/go-rest-api/internal/models"
 	"github.com/Subham-Das-98/go-rest-api/internal/utils/pwd"
 	"github.com/google/uuid"
-	"gorm.io/gorm"
+	// "gorm.io/gorm"
 )
 
 type UserRepository interface {
@@ -45,15 +45,15 @@ func (s *UserService) CreateUser(ctx context.Context, name, email, password stri
 		return errors.New("password is required")
 	}
 
-	existingUser, err := s.repo.GetByEmail(ctx, email)
+	// existingUser, err := s.repo.GetByEmail(ctx, email)
 
-	if err == nil && existingUser != nil {
-		return errors.New("email already exists")
-	}
+	// if err == nil && existingUser != nil {
+	// 	return errors.New("email already exists")
+	// }
 
-	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
-		return err
-	}
+	// if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
+	// 	return err
+	// }
 
 	hash, err := pwd.RawToHash(password)
 	if err != nil {

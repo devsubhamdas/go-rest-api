@@ -43,9 +43,9 @@ func (h *UserHandler) CreateUser(w http.ResponseWriter, r *http.Request) {
 		w,
 		http.StatusCreated,
 		struct {
-			message string
+			Message string `json:"message"`
 		}{
-			message: "user created successfully",
+			Message: "user created successfully",
 		})
 }
 
@@ -71,9 +71,9 @@ func (h *UserHandler) UpdateUser(w http.ResponseWriter, r *http.Request) {
 		w,
 		http.StatusOK,
 		struct {
-			message string
+			Message string `json:"message"`
 		}{
-			message: "user updated successfully",
+			Message: "user updated successfully",
 		})
 }
 
@@ -87,15 +87,16 @@ func (h *UserHandler) DeleteUser(w http.ResponseWriter, r *http.Request) {
 			http.StatusInternalServerError,
 			fmt.Sprintf("failed to delete user [%s]", err.Error()),
 		)
+		return
 	}
 
 	response.WriteJSON(
 		w,
 		http.StatusOK,
 		struct {
-			message string
+			Message string `json:"message"`
 		}{
-			message: "user deleted successfully",
+			Message: "user deleted successfully",
 		},
 	)
 }
@@ -125,11 +126,11 @@ func (h *UserHandler) GetUser(w http.ResponseWriter, r *http.Request) {
 		w,
 		http.StatusOK,
 		struct {
-			message string
-			data    any
+			Message string `json:"message"`
+			Data    any    `json:"data"`
 		}{
-			message: "user fetched successfully",
-			data:    userData,
+			Message: "user fetched successfully",
+			Data:    userData,
 		})
 }
 
@@ -159,10 +160,10 @@ func (h *UserHandler) GetUsers(w http.ResponseWriter, r *http.Request) {
 		w,
 		http.StatusOK,
 		struct {
-			message string
-			data    any
+			Message string `json:"message"`
+			Data    any    `json:"data"`
 		}{
-			message: "users fetched successfully",
-			data:    data,
+			Message: "users fetched successfully",
+			Data:    data,
 		})
 }

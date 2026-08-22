@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"log"
 	"log/slog"
 	"net/http"
@@ -12,10 +13,10 @@ import (
 
 	"github.com/Subham-Das-98/go-rest-api/internal/config"
 	"github.com/Subham-Das-98/go-rest-api/internal/handler"
-	"github.com/Subham-Das-98/go-rest-api/internal/models"
 	"github.com/Subham-Das-98/go-rest-api/internal/repository"
 	"github.com/Subham-Das-98/go-rest-api/internal/service"
 	"github.com/Subham-Das-98/go-rest-api/internal/storage"
+	// "github.com/Subham-Das-98/go-rest-api/internal/models"
 )
 
 func main() {
@@ -30,13 +31,13 @@ func main() {
 	}
 
 	// migration
-	err = db.AutoMigrate(&models.User{})
-	if err != nil {
-		slog.Error("database migration failed",
-			slog.String("error", err.Error()),
-		)
-		os.Exit(1)
-	}
+	// err = db.AutoMigrate(&models.User{})
+	// if err != nil {
+	// 	slog.Error("database migration failed",
+	// 		slog.String("error", err.Error()),
+	// 	)
+	// 	os.Exit(1)
+	// }
 
 	// Repository
 	userRepository := repository.NewUserRepository(db)
@@ -91,19 +92,19 @@ func main() {
 	signal.Notify(done, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
 	go func() {
 		err := server.ListenAndServe()
-		if err != nil {
-			log.Fatal("Failed to start server")
+		if err != nil && !errors.Is(err, http.ErrServerClosed) {
+			log.Fatal("failed to start server")
 		}
 	}()
 
 	<-done
 
-	slog.Info("Shutting down the server...")
+	slog.Info("shutting down the server...")
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	err = server.Shutdown(ctx)
 	if err != nil {
-		slog.Error("Failed to shutdown server", slog.String("error", err.Error()))
+		slog.Error("failed to shutdown server", slog.String("error", err.Error()))
 	}
 	slog.Info("server shutdown successfully")
 }
