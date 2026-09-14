@@ -52,7 +52,7 @@ Uncomment this section from the `cmd/rest-api/main.go` file.
 // other code
 import (
   // other modules
-  "github.com/Subham-Das-98/go-rest-api/internal/models"
+  "github.com/devsubhamdas/go-rest-api/internal/models"
 )
 
 func main() {
