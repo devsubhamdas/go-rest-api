@@ -144,18 +144,6 @@ func (h *UserHandler) GetUsers(w http.ResponseWriter, r *http.Request) {
 		)
 	}
 
-	data := make([]dto.UserResponse, 0, len(users))
-
-	for _, user := range users {
-		data = append(data, dto.UserResponse{
-			ID:        user.ID,
-			Name:      user.Name,
-			Email:     user.Email,
-			CreatedAt: user.CreatedAt,
-			UpdatedAt: user.UpdatedAt,
-		})
-	}
-
 	response.WriteJSON(
 		w,
 		http.StatusOK,
@@ -164,6 +152,6 @@ func (h *UserHandler) GetUsers(w http.ResponseWriter, r *http.Request) {
 			Data    any    `json:"data"`
 		}{
 			Message: "users fetched successfully",
-			Data:    data,
+			Data:    users,
 		})
 }

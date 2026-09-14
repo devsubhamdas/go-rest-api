@@ -5,6 +5,7 @@ import (
 	"errors"
 	"strings"
 
+	"github.com/devsubhamdas/go-rest-api/internal/dto"
 	"github.com/devsubhamdas/go-rest-api/internal/models"
 	"github.com/devsubhamdas/go-rest-api/internal/utils/pwd"
 	"github.com/google/uuid"
@@ -138,6 +139,24 @@ func (s *UserService) GetUser(ctx context.Context, id string) (*models.User, err
 	return s.repo.GetByID(ctx, uid)
 }
 
-func (s *UserService) GetUsers(ctx context.Context) ([]models.User, error) {
-	return s.repo.GetAll(ctx)
+func (s *UserService) GetUsers(ctx context.Context) ([]dto.UserResponse, error) {
+	users, err := s.repo.GetAll(ctx)
+
+	if err != nil {
+		return nil, err
+	}
+
+	data := make([]dto.UserResponse, 0, len(users))
+
+	for _, user := range users {
+		data = append(data, dto.UserResponse{
+			ID:        user.ID,
+			Name:      user.Name,
+			Email:     user.Email,
+			CreatedAt: user.CreatedAt,
+			UpdatedAt: user.UpdatedAt,
+		})
+	}
+
+	return data, nil
 }
