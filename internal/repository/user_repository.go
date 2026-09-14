@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 
-	"github.com/Subham-Das-98/go-rest-api/internal/models"
+	"github.com/devsubhamdas/go-rest-api/internal/models"
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgconn"
 	"gorm.io/gorm"

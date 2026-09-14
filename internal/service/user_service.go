@@ -5,8 +5,8 @@ import (
 	"errors"
 	"strings"
 
-	"github.com/Subham-Das-98/go-rest-api/internal/models"
-	"github.com/Subham-Das-98/go-rest-api/internal/utils/pwd"
+	"github.com/devsubhamdas/go-rest-api/internal/models"
+	"github.com/devsubhamdas/go-rest-api/internal/utils/pwd"
 	"github.com/google/uuid"
 	// "gorm.io/gorm"
 )

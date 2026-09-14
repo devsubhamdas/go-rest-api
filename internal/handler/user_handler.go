@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/Subham-Das-98/go-rest-api/internal/dto"
-	"github.com/Subham-Das-98/go-rest-api/internal/service"
-	"github.com/Subham-Das-98/go-rest-api/internal/utils/response"
+	"github.com/devsubhamdas/go-rest-api/internal/dto"
+	"github.com/devsubhamdas/go-rest-api/internal/service"
+	"github.com/devsubhamdas/go-rest-api/internal/utils/response"
 )
 
 type UserHandler struct {

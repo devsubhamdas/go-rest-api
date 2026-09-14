@@ -11,11 +11,11 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/Subham-Das-98/go-rest-api/internal/config"
-	"github.com/Subham-Das-98/go-rest-api/internal/handler"
-	"github.com/Subham-Das-98/go-rest-api/internal/repository"
-	"github.com/Subham-Das-98/go-rest-api/internal/service"
-	"github.com/Subham-Das-98/go-rest-api/internal/storage"
+	"github.com/devsubhamdas/go-rest-api/internal/config"
+	"github.com/devsubhamdas/go-rest-api/internal/handler"
+	"github.com/devsubhamdas/go-rest-api/internal/repository"
+	"github.com/devsubhamdas/go-rest-api/internal/service"
+	"github.com/devsubhamdas/go-rest-api/internal/storage"
 	// "github.com/Subham-Das-98/go-rest-api/internal/models"
 )
 

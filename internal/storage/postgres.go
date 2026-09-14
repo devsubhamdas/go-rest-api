@@ -1,7 +1,7 @@
 package storage
 
 import (
-	"github.com/Subham-Das-98/go-rest-api/internal/config"
+	"github.com/devsubhamdas/go-rest-api/internal/config"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
